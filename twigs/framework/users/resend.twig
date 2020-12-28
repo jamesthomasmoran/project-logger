@@ -11,9 +11,9 @@
     <section class="row" id="frontpage">
         <article class="ml-auto col-md-6 mr-auto mt-5">
             {% include '@util/message.twig' %}
-            <form action="{{base}}/confirm/resend" method="post" class="jumbotron">
+            <form action="{{base}}/confirm/resend" method="post" class="primary-color jumbotron">
+                <legend class="light-text-color text-center">Resend Confirmation Email</legend>
                 <fieldset>
-                    <legend>Resend Email Confirmation Message</legend>
                     <div class="form-group">
                         <label for="el" class="control-label">User Name</label>
                         <input type="text" id="el" name="eorl" placeholder="Your user name or email address" class="form-control input-sm" required="required"/>

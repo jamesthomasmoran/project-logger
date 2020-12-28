@@ -16,7 +16,7 @@
 {% endblock pageheader %}
 
 {% block main %}
-    <section class="row" id="frontpage">
+    <section class="row mt-4" id="frontpage">
         <article class="ml-auto col-md-8 mr-auto">
             {% include '@util/message.twig' %}
             {% if regok is defined %}
@@ -24,16 +24,20 @@
                 <p><a href="{{base}}/" class="btn btn-primary">Home Page</a></p>
             {% else %}
 
-                <h1 class="jumbotron">Register for {{fwurls.sitename.value}}</h1>
-                {{f.startform({method: 'post', class: 'jumbotron', id: 'regform'})}}
-                    {{f.text({label: 'User Name', id: 'un', ph: 'User name - alphanumeric characters only',
+                {{f.startform({method: 'post', class: 'primary-color jumbotron', id: 'regform'})}}
+                <legend class="light-text-color text-center">Sign Up</legend>
+                <label class="light-text-color" for="un">User name</label>
+                    {{f.text({ id: 'un', ph: 'User name - alphanumeric characters only', class:'light-text-color',
                         parsley: {trigger: 'change',  'remote-reverse': 'false', remote: base~'/ajax/uniquenl/user/login/{value}',
                         'remote-message': 'That user name is not available', type: 'alphanum'}, required: TRUE})}}
-                    {{f.password({label: 'Password', id: 'pw', name: 'password', ph: '*********', required: TRUE})}}
-                    {{f.password({label: 'Repeat Password', id: 'rpw', name: 'repeat', ph: '*********', parsley: {trigger: 'change', equalTo: '#pw'}, required: TRUE})}}
-                    {{f.email({label: 'Email Address', id: 'em', name: 'email', ph: 'pat@smith.org', parsley: {trigger: 'change'}, required: TRUE})}}
+                <label class="light-text-color" for="pw">Password</label>
+                {{f.password({id: 'pw', name: 'password', ph: '*********', required: TRUE})}}
+                <label class="light-text-color" for="rpw">Repeated Password</label>
+                {{f.password({id: 'rpw', name: 'repeat', ph: '*********', parsley: {trigger: 'change', equalTo: '#pw'}, required: TRUE})}}
+                <label class="light-text-color" for="em">Email</label>
+                {{f.email({id: 'em', name: 'email', ph: 'pat@smith.org', parsley: {trigger: 'change'}, required: TRUE})}}
                     <p class="mt-4">
-                        {{f.submit({value: 'Register'})}}
+                        {{f.submit({bstyle:'hover-color float-right btn-primary', value: 'Register'})}}
                     </p>
                 {{f.endform()}}
             {% endif %}

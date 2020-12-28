@@ -37,6 +37,7 @@
         <link rel="stylesheet" {{h.urlattr(fwurls.editablecss)}}/>
     {% endif %}
     <link rel="stylesheet" href="{{assets}}/css/layout.min.css" media="screen"/>
+    <link rel="stylesheet" href="{{assets}}/scss/layout.css" media="screen"/>
 
     {% block head %}
     {% endblock head %}
@@ -52,7 +53,7 @@
     {% endif %}
 
 </head>
-<body lang="{{deflang is defined ? deflang : 'en-GB'}}">
+<body class="background-color" lang="{{deflang is defined ? deflang : 'en-GB'}}">
     {% block body %}
     {% endblock body %}
 
