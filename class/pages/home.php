@@ -26,6 +26,8 @@
  */
         public function handle(Context $context)
         {
+            $projects = \R::findAll('project', 'user_id = ?', [$context->user()->getID()]);
+            $context->local()->addval('projects', $projects);
             return '@content/index.twig';
         }
     }

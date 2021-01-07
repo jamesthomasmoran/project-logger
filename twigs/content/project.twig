@@ -1,0 +1,72 @@
+
+{% set parsley = TRUE %}
+
+{% set title = '{{project.name}} - Project Logger' %}
+
+{% set breadcrumbs = [{link:'/', text: 'Home'}, {text: 'Project'}] %}
+
+{% extends '@content/page.twig' %}
+
+{% block meta %}
+    {# <meta> for things like keywords etc.#}
+{% endblock meta %}
+
+{% block links %}
+    {# <link> for non-css and non-type things#}
+{% endblock links %}
+
+{% block type %}
+    {# <link> for webfonts #}
+{% endblock type %}
+
+{% block css %}
+    {# <link> for any other CSS files you need #}
+{% endblock css %}
+
+{% block scripts %}
+    {# <script src=""></script> for any other JS files you need #}
+{% endblock scripts %}
+
+{% block setup %}
+    {# Any javascript you need that is NOT run on load goes in this block. ***NB you don't need <script></script> tags here*** #}
+{% endblock setup %}
+
+{% block onload %}
+    $('#pform').on('submit',function(e){
+    return $(this).parsley().validate();
+    }).parsley();
+{% endblock onload %}
+
+{% block header %}
+    <article class="col-md-12">
+        <h1 class="text-center">{{action}}</h1>
+    </article>
+{% endblock header %}
+
+{% block main %}
+    <section class="row">
+        <article class="ml-auto col-md-8 mr-auto">
+            {% include '@util/message.twig' %}
+            <div class='primary-color light-text-color jumbotron'>
+                <h1>{{ project.name }}</h1>
+                <p>{{ project.description }}</p>
+            </div>
+        </article>
+    </section>
+{% endblock main %}
+
+{# uncomment this and delete the footer block below to remove the <footer> tag altogether
+{% block pagefooter %}
+{% endblock pagefooter %}
+#}
+
+{#
+If you have a standard footer for all (most) pages then put the
+content in the file twigs/surround/footer.twig. It is included by page.twig by
+default. You then don't need to have a footer block either.
+#}
+
+{% block footer %}
+    <article class="col-md-12">
+    </article>
+{% endblock footer %}

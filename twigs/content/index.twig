@@ -1,31 +1,40 @@
 {% extends '@content/page.twig' %}
 
 {% block onload %}
-    $('#alert').on('click', function(){
-        bootbox.alert('Hello World')
-    })
 {% endblock onload %}
 
 {% block header %}
     <section class="col-md-12 mt-5">
-        <h1 class="text-center">Header</h1>
+        <h1 class="text-center">My Projects</h1>
     </section>
 {% endblock header %}
 
 {% block main %}
     <section class="row">
-        <aside class="col">
-            <p>Left</p>
-        </aside>
-        <article class="col-md-8">
-            <div class="jumbotron">
-                This is the middle column
+        <article class="ml-auto ol-md-8 mr-auto">
+            <a class="hover-color light-text-color btn btn-primary" href="{{ base }}/newproject"}>
+                Add new Project</a>
+            <div class="accordion" id="my-projects">
+                {% for key,project in projects %}
+                <div class="light-text-color card">
+                    <div class="primary-color card-header" id="heading{{ key }}">
+                        <h2 class="mb-0">
+                            <a type="button" class="light-text-color btn btn-link" data-toggle="collapse" data-target="#collapse{{ key }}">
+                                {{ project.name }}</a>
+                        </h2>
+                    </div>
+                    <div id="collapse{{ key }}" class="dark-text-color collapse" aria-labelledby="heading{{ key }}" data-parent="#my-projects">
+                        <div class="card-body">
+                            <p>Last 5 actvities</p>
+                            <a class="hover-color light-text-color btn btn-primary" href="{{ base }}/project/{{ project.id }}"}>
+                                View all</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            <button id="alert" class="btn btn-lg btn-info" type="button">Alert</button>
+
         </article>
-        <aside id="rightbar" class="col">
-            <p>Right</p>
-        </aside>
     </section>
 {% endblock main %}
 
