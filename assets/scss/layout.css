@@ -51,6 +51,10 @@ body {
   color: #ffffff;
 }
 
+.light-background-color {
+  background-color: #ffffff;
+}
+
 .dark-text-color {
   color: #000000;
 }

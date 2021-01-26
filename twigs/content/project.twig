@@ -1,7 +1,7 @@
 
 {% set parsley = TRUE %}
 
-{% set title = '{{project.name}} - Project Logger' %}
+{% set title = project.name ~ ' - Project Logger' %}
 
 {% set breadcrumbs = [{link:'/', text: 'Home'}, {text: 'Project'}] %}
 
@@ -50,6 +50,45 @@
             <div class='primary-color light-text-color jumbotron'>
                 <h1>{{ project.name }}</h1>
                 <p>{{ project.description }}</p>
+            </div>
+            <div class="light-text-color card">
+                <div class="primary-color card-header">
+                    <h2 class="d-inline mb-0">
+                        <a type="button" class="light-text-color">
+                            Your Notes</a>
+                    </h2>
+                </div>
+                <div class="dark-text-color">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Hours worked</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if notes|length < 1 %}
+                                <tr>
+                                    <td>No Project Notes</td>
+                                    <td></td>
+                                </tr>
+                            {% endif %}
+                            {% for note in notes %}
+                                <tr>
+                                    <td>{{ note.date }}</td>
+                                    <td>{{ note.hours }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <a class="hover-color light-text-color btn btn-primary" href="{{ base }}/newtimelog/{{ project.id }}"}>
+                            Add Timelog</a>
+                        <a class="hover-color light-text-color btn btn-primary" href="{{ base }}/project/{{ project.id }}"}>
+                            View all</a>
+                    </div>
+                </div>
             </div>
         </article>
     </section>

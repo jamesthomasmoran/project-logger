@@ -1,0 +1,90 @@
+
+{% set parsley = TRUE %}
+
+{% set title = 'Add Note - Project Logger' %}
+
+{% set breadcrumbs = [{link:'/', text: 'Home'}, {link:'/project/{{ project.id }}', text: 'Project'}, {text: 'Add Note'}] %}
+
+{% extends '@content/page.twig' %}
+
+{% import '@util/formmacro.twig' as f %}
+
+
+{% block scripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+{% endblock scripts %}
+
+{% block setup %}
+{% endblock setup %}
+
+{% block onload %}
+    $(document).on('change', '.custom-file-input', function (event) {
+    let attachments = '';
+    for(let i = 0; i < event.target.files.length; i++) {
+        attachments += '<tr><td>' + event.target.files[i].name + '</td></tr>';
+    }
+    console.log(attachments);
+    $('#attachment-list').html(attachments);
+    })
+
+{% endblock onload %}
+
+{% block header %}
+    <article class="col-md-12">
+        <h1 class="text-center">{{action}}</h1>
+    </article>
+{% endblock header %}
+
+{% block main %}
+    {{ dump(uploads) }}
+    <section class="row">
+        <article class="ml-auto col-md-8 mr-auto">
+            {% include '@util/message.twig' %}
+            {{f.startform({ action: formaction, method: 'post', id: 'anform', class: 'primary-color light-text-color jumbotron', multi: TRUE})}}
+            <legend class="light-text-color text-center">New Note</legend>
+            <div>
+            <div class="d-inline-block w-25">
+                <label>Day</label>
+                <input type="number" name="day" value="{{ day == 0 ? '' : day }}" class="form-control" placeholder="d", min="1", max="31", data-parsley-trigger="blur"/>
+            </div>
+                <div class="d-inline-block w-25">
+                    <label>Month</label>
+                    <input type="number" name="month" value="{{ month == 0 ? '' : month }}" class="form-control" placeholder="m", min="1", max="12", data-parsley-trigger="blur">
+                </div>
+            <div class="d-inline-block w-25 mb-3">
+                <label>Year</label>
+                <input type="number" name="year" value="{{ year == 0 ? '' : year }}" class="form-control" placeholder="yyyy", max="{{currentyear}}", data-parsley-trigger="blur">
+            </div>
+            </div>
+            {{f.number({label: 'Hours worked', name: 'hours', ph: 'Hours worked', value: hours, parsley: {min: 0, max:24, trigger: 'blur'}})}}
+            {{f.textarea({label: 'Note', name: 'description', ph: 'Your Note', value: notetext, rows: '5', parsley: {maxlength:250, trigger: 'blur'}})}}
+
+            <label>Attachments</label>
+            <div class="light-background-color card-body mb-3">
+            <div class="custom-file overflow-hidden">
+                <input type="file" name="attachments[]" class="custom-file-input" id="attachment-input" multiple>
+                <label class="custom-file-label" for="attachment-input">Choose files</label>
+            </div>
+            <table class="table">
+                <tbody id="attachment-list">
+
+                </tbody>
+            </table>
+            </div>
+
+            {{f.submit({value: 'Create', bstyle: 'float-right hover-color btn btn-primary'})}}
+
+            {{f.endform()}}
+
+            {% for file in files %}
+            <p>{{ file.name }}</p>
+            {% endfor %}
+        </article>
+    </section>
+{% endblock main %}
+
+{% block footer %}
+    <article class="col-md-12">
+    </article>
+{% endblock footer %}

@@ -1,6 +1,7 @@
 {% extends '@content/page.twig' %}
 
 {% block onload %}
+
 {% endblock onload %}
 
 {% block header %}
@@ -10,22 +11,57 @@
 {% endblock header %}
 
 {% block main %}
+
     <section class="row">
+
         <article class="ml-auto ol-md-8 mr-auto">
             <a class="hover-color light-text-color btn btn-primary" href="{{ base }}/newproject"}>
                 Add new Project</a>
+
             <div class="accordion" id="my-projects">
+
                 {% for key,project in projects %}
                 <div class="light-text-color card">
                     <div class="primary-color card-header" id="heading{{ key }}">
-                        <h2 class="mb-0">
-                            <a type="button" class="light-text-color btn btn-link" data-toggle="collapse" data-target="#collapse{{ key }}">
+                        <h2 class="d-inline mb-0" >
+                            <a type="button" class="light-text-color" data-toggle="collapse" data-target="#collapse{{ key }}">
                                 {{ project.name }}</a>
                         </h2>
+                        <div class="ml-3 d-inline float-right">
+                            <label class="text-center">Total hours</label>
+                            <h3 class="ml-3 text-center mb-0">
+                             {{ totalhours[loop.index0] }}
+                            </h3>
+                        </div>
                     </div>
+
                     <div id="collapse{{ key }}" class="dark-text-color collapse" aria-labelledby="heading{{ key }}" data-parent="#my-projects">
                         <div class="card-body">
-                            <p>Last 5 actvities</p>
+                            <p><b>Most Recent timelogs</b></p>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Hours worked</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if timelogs[loop.index0]|length < 1 %}
+                                        <tr>
+                                            <td>No Timelogs submitted</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% for log in timelogs[loop.index0] %}
+                                        <tr>
+                                            <td>{{ log.date }}</td>
+                                            <td>{{ log.hours }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <a class="hover-color light-text-color btn btn-primary" href="{{ base }}/newtimelog/{{ project.id }}"}>
+                                Add Timelog</a>
                             <a class="hover-color light-text-color btn btn-primary" href="{{ base }}/project/{{ project.id }}"}>
                                 View all</a>
                         </div>

@@ -27,7 +27,24 @@
         public function handle(Context $context)
         {
             $projects = \R::findAll('project', 'user_id = ?', [$context->user()->getID()]);
+            $timelogs = array();
+            $totalHours = array();
+
+            foreach ( $projects as &$value){
+                $timelogs[] = \R::findAll('timelog', 'project_id = ? ORDER BY date DESC', [$value->getID()]);
+
+                $hours = 0;
+                foreach (end($timelogs) as &$log)
+                {
+                    $hours += $log->hours;
+                }
+                $totalHours[] = $hours;
+                $timelogs[count($timelogs) - 1] = array_slice($timelogs[count($timelogs) - 1], 0, 5);
+        }
+
             $context->local()->addval('projects', $projects);
+            $context->local()->addval('timelogs',$timelogs);
+            $context->local()->addval('totalhours', $totalHours);
             return '@content/index.twig';
         }
     }
