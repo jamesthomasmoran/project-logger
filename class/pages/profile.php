@@ -2,29 +2,27 @@
 /**
  * A class that contains code to handle any requests for  /profile/
  *
- * @author Your Name <Your@email.org>
- * @copyright year You
- * @package Framework
- * @subpackage UserPages
+ * @author James Moran <j.moran3@ncl.ac.uk>
+ * @package Pages
  */
     namespace Pages;
 
     use Framework\Exception\BadValue;
     use \Support\Context as Context;
 /**
- * Support /profile/
+ * A class that contains code to implement a home
  */
     class Profile extends \Framework\Siteaction
     {
-        /**
-         * Handle profile operations
-         *
-         * @param Context $context The context object for the site
-         *
-         * @return string|array   A template name
-         *
-         * @throws BadValue
-         */
+/**
+* Handle profile operations
+*
+* @param Context $context The context object for the site
+*
+* @return string|array   A template name
+*
+* @throws BadValue
+*/
         public function handle(Context $context)
         {
             $fdt = $context->formData('post');
@@ -71,4 +69,3 @@
             return '@content/profile.twig';
         }
     }
-?>

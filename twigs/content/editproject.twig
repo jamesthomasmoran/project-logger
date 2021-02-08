@@ -16,11 +16,11 @@
     <section class="row">
         <article class="ml-auto col-md-8 mr-auto">
             {% include '@util/message.twig' %}
-            {{f.startform({ action: '/project/add', method: 'post', id: 'npform', class: 'primary-color light-text-color jumbotron'})}}
-                <legend class="light-text-color text-center">New Project</legend>
+            {{f.startform({ action: '/project/' ~ project.id ~ '/edit', method: 'post', id: 'npform', class: 'primary-color light-text-color jumbotron'})}}
+                <legend class="light-text-color text-center">Edit Project</legend>
                 {{f.text({label: 'Project Name', name: 'name', ph: 'Your project name', value: project.name, parsley: {trigger: 'blur'}})}}
                 {{f.textarea({label: 'Project Description', name: 'description', ph: 'Your project description', value: project.description, rows: '5', parsley: {maxlength:250, trigger: 'blur'}})}}
-                {{f.submit({value: 'Create', bstyle: 'float-right hover-color btn btn-primary'})}}
+                {{f.submit({value: 'Edit', bstyle: 'float-right hover-color btn btn-primary'})}}
             {{f.endform()}}
         </article>
     </section>

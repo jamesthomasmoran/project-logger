@@ -1,0 +1,68 @@
+{% set title = note.date ~ ' - Project Logger' %}
+
+{% set breadcrumbs = [{link:'/', text: 'Home'}, {link:'/project/' ~ project.id, text: 'Project'}, {text: 'Note'}] %}
+
+{% extends '@content/page.twig' %}
+
+{% block header %}
+    <article class="col-md-12">
+        <h1 class="text-center">{{action}}</h1>
+    </article>
+{% endblock header %}
+
+{% block main %}
+    <section class="row">
+        <article class="ml-auto col-md-8 mr-auto">
+            {% include '@util/message.twig' %}
+            <div class='primary-color light-text-color jumbotron'>
+                <h1>{{ note.date }}</h1>
+                <p><b>Hours worked</b>: {{ note.hours }}</p>
+                {% if note.text == null %}
+                    <p>No Note Text</p>
+                {% endif %}
+                <p>{{ note.text }}</p>
+
+                <a class="hover-color light-text-color btn btn-primary" href="{{ base }}/project/{{ project.id }}/note/{{ note.id }}/edit"}>
+                    Edit Note</a>
+                <a class="light-text-color btn btn-danger" href="{{ base }}/project/{{ project.id }}/note/{{ note.id }}/delete"}>
+                    Delete Note</a>
+            </div>
+            <div class="light-text-color card">
+                <div class="primary-color card-header">
+                    <h2 class="d-inline mb-0">
+                        <a type="button" class="light-text-color">
+                            Attachments</a>
+                    </h2>
+                </div>
+                <div class="dark-text-color">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">File Name</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if attachments|length < 1 %}
+                                <tr>
+                                    <td>No Files</td>
+                                    <td></td>
+                                </tr>
+                            {% endif %}
+                            {% for file in attachments %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ base }}/private/file/{{ file.getID }}"}>
+                                        {{ file.filename }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+{% endblock main %}
